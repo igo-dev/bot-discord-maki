@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DSharpPlus;
+using bot_discord.Features;
+using DSharpPlus.EventArgs;
 
 namespace bot_discord
 {
@@ -10,15 +12,22 @@ namespace bot_discord
         {
             MainAsync().GetAwaiter().GetResult();
             Console.Read();
+            
         }
-        static async Task MainAsync()
+        public static async Task MainAsync()
         {
             var discordClient = await CreateDiscordClient();
 
-                discordClient.MessageCreated += async (s, e) => 
+            discordClient.MessageCreated += async (s, e) => 
             {
-                if(e.Message.Content.ToLower().Contains("ping"))
-                    await e.Message.RespondAsync("pong!");
+                if(e.Message.Content.ToLower().StartsWith("maki ping"))
+                    await PingPongFeature.Ping(s, e);
+
+                else if(e.Message.Content.ToLower().StartsWith("maki cat "))
+                    await CatFeature.Cat(s, e);
+
+                else if(e.Message.Content.ToLower().StartsWith("maki help"))
+                    await HelpFeature.Help(s, e);
             };
         }
 
