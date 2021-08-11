@@ -6,4 +6,8 @@
     <RootNamespace>bot_discord</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="DSharpPlus" Version="4.1.0" />
+  </ItemGroup>
+
 </Project>

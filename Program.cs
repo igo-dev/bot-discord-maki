@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using DSharpPlus;
 
 namespace bot_discord
 {
@@ -6,7 +8,18 @@ namespace bot_discord
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            MainAsync().GetAwaiter().GetResult();
+        }
+        static async Task MainAsync()
+        {
+            var discord = new DiscordClient(new DiscordConfiguration() 
+            {
+                Token = Environment.GetEnvironmentVariable("BOT_TOKEN"),
+                TokenType = TokenType.Bot
+            });
+
+            await discord.ConnectAsync();
+            await Task.Delay(-1);
         }
     }
 }
