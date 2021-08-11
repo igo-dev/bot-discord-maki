@@ -8,7 +8,10 @@ namespace bot_discord
     {
         static void Main(string[] args)
         {
-            MainAsync().GetAwaiter().GetResult();
+            while (true)
+            {
+                MainAsync().GetAwaiter().GetResult();
+            }
         }
         static async Task MainAsync()
         {
@@ -25,7 +28,6 @@ namespace bot_discord
             };
 
             await discord.ConnectAsync();
-            await Task.Delay(-1);
 
         }
     }
