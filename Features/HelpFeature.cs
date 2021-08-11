@@ -1,13 +1,12 @@
 using System.Threading.Tasks;
 using DSharpPlus;
 
-namespace bot_discord
+namespace bot_discord.Features
 {
     public class HelpFeature
     {
         public static async Task Help(DiscordClient s, DSharpPlus.EventArgs.MessageCreateEventArgs e)
         {
-            await e.Message.DeleteAsync();
             await e.Message.RespondAsync(
 @"```
 Lista de Comandos:
