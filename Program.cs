@@ -11,8 +11,9 @@ namespace bot_discord
         static void Main(string[] args)
         {
             MainAsync().GetAwaiter().GetResult();
-            Console.Read();
-            
+            while (true)
+            {
+            }
         }
         public static async Task MainAsync()
         {
