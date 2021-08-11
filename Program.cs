@@ -8,12 +8,21 @@ namespace bot_discord
     {
         static void Main(string[] args)
         {
-            while (true)
-            {
-                MainAsync().GetAwaiter().GetResult();
-            }
+            MainAsync().GetAwaiter().GetResult();
+            Console.Read();
         }
         static async Task MainAsync()
+        {
+            var discordClient = await CreateDiscordClient();
+
+                discordClient.MessageCreated += async (s, e) => 
+            {
+                if(e.Message.Content.ToLower().Contains("ping"))
+                    await e.Message.RespondAsync("pong!");
+            };
+        }
+
+        static async Task<DiscordClient> CreateDiscordClient()
         {
             var discord = new DiscordClient(new DiscordConfiguration() 
             {
@@ -21,14 +30,9 @@ namespace bot_discord
                 TokenType = TokenType.Bot
             });
             
-            discord.MessageCreated += async (s, e) => 
-            {
-                if(e.Message.Content.ToLower().Contains("ping"))
-                    await e.Message.RespondAsync("pong!");
-            };
-
             await discord.ConnectAsync();
-
+            return discord;
         }
+
     }
 }
