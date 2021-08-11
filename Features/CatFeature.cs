@@ -17,7 +17,6 @@ namespace bot_discord.Features
             else
             using (HttpClient httpClient = new HttpClient())
             {
-                await e.Message.DeleteAsync();
                 string response = await httpClient.GetStringAsync($"https://cataas.com/cat?json=true");
                 string catId = JsonConvert.DeserializeObject<dynamic>(response).Property("url").Value;
                 await e.Message.RespondAsync($"https://cataas.com{catId}/says/{str}?width=300");

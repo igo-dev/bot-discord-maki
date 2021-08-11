@@ -7,7 +7,6 @@ namespace bot_discord.Features
     {
         public static async Task Ping(DiscordClient s, DSharpPlus.EventArgs.MessageCreateEventArgs e)
         {
-            await e.Message.DeleteAsync();
             await e.Message.RespondAsync("pong!");
         }
         
