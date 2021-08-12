@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DSharpPlus;
-using bot_discord.Features;
-using DSharpPlus.EventArgs;
+using DSharpPlus.Entities;
+using bot_discord.Handlers;
+using Microsoft.Extensions.Logging;
 
 namespace bot_discord
 {
@@ -11,36 +12,27 @@ namespace bot_discord
         static void Main(string[] args)
         {
             MainAsync().GetAwaiter().GetResult();
-            while (true)
-            {
-            }
+            Task.Delay(-1);
         }
         public static async Task MainAsync()
         {
             var discordClient = await CreateDiscordClient();
 
-            discordClient.MessageCreated += async (s, e) => 
-            {
-                if(e.Message.Content.ToLower().StartsWith("maki ping"))
-                    await PingPongFeature.Ping(s, e);
+            discordClient.MessageCreated += MessageCreatedHandler.MessageCreated;
 
-                else if(e.Message.Content.ToLower().StartsWith("maki cat "))
-                    await CatFeature.Cat(s, e);
-
-                else if(e.Message.Content.ToLower().StartsWith("maki help"))
-                    await HelpFeature.Help(s, e);
-            };
         }
-
         static async Task<DiscordClient> CreateDiscordClient()
         {
             var discord = new DiscordClient(new DiscordConfiguration() 
             {
                 Token = Environment.GetEnvironmentVariable("BOT_TOKEN"),
-                TokenType = TokenType.Bot
+                TokenType = TokenType.Bot,
+                MinimumLogLevel = LogLevel.Debug
             });
+
+            DiscordActivity discordActivity = new("maki help", ActivityType.Playing);
             
-            await discord.ConnectAsync();
+            await discord.ConnectAsync(discordActivity);
             return discord;
         }
 
