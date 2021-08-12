@@ -12,14 +12,15 @@ namespace bot_discord
         static void Main(string[] args)
         {
             MainAsync().GetAwaiter().GetResult();
-            Task.Delay(-1);
+            
         }
         public static async Task MainAsync()
         {
             var discordClient = await CreateDiscordClient();
 
             discordClient.MessageCreated += MessageCreatedHandler.MessageCreated;
-
+            
+            await Task.Delay(-1);
         }
         static async Task<DiscordClient> CreateDiscordClient()
         {
@@ -27,7 +28,6 @@ namespace bot_discord
             {
                 Token = Environment.GetEnvironmentVariable("BOT_TOKEN"),
                 TokenType = TokenType.Bot,
-                MinimumLogLevel = LogLevel.Debug
             });
 
             DiscordActivity discordActivity = new("maki help", ActivityType.Playing);
